@@ -1,5 +1,5 @@
 {
-    "name": "artursh/leclient",
+    "name": "artursh/LEClient",
     "type": "library",
     "description": "PHP LetsEncrypt client library for ACME v2",
     "license": "MIT",
