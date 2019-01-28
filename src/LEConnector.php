@@ -88,7 +88,7 @@ class LEConnector
      */
 	private function getNewNonce()
 	{
-		if(strpos($this->head($this->newNonce)['header'], "204 No Content") == false) throw new \RuntimeException('No new nonce.');
+		if (strpos($this->head($this->newNonce)['header'], "200 OK") == false) throw new \RuntimeException('No new nonce.');
 	}
 
     /**
@@ -141,9 +141,11 @@ class LEConnector
 		$jsonresponse = array('request' => $method . ' ' . $requestURL, 'header' => $header, 'body' => $jsonbody === null ? $body : $jsonbody);
 		if($this->log >= LECLient::LOG_DEBUG) LEFunctions::log($jsonresponse);
 
-		if(	(($method == 'POST' OR $method == 'GET') AND strpos($header, "200 OK") === false AND strpos($header, "201 Created") === false) OR
-			($method == 'HEAD' AND strpos($header, "204 No Content") === false))
-		{
+		if((($method == 'POST' OR $method == 'GET')
+				AND strpos($header, "200 OK") === false
+				AND strpos($header, "201 Created") === false)
+			OR ($method == 'HEAD' AND strpos($header, "200 OK") === false)
+		) {
 			throw new \RuntimeException('Invalid response, header: ' . $header);
 		}
 
